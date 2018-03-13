@@ -1,0 +1,36 @@
+{
+  "name": "react-native-numeric-keyboard",
+  "version": "0.0.1",
+  "description": "react-native-numeric-keyboard",
+  "main": "lib/NumericKeyboard.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hi-FE/react-native-numeric-keyboard.git"
+  },
+  "author": "Hi-FE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hi-FE/react-native-numeric-keyboard/issues"
+  },
+  "homepage": "https://github.com/Hi-FE/react-native-numeric-keyboard#readme",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "react",
+    "react-native",
+    "ios",
+    "android",
+    "keyboard",
+    "numeric-keyboard"
+  ],
+  "dependencies": {
+    "prop-types": "^15.6.1"
+  }
+}
