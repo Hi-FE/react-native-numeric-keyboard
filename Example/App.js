@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import NumericKeyboard from 'react-native-numeric-keyboard';
 
@@ -13,10 +13,11 @@ export default class App extends Component {
   state = {
     value: ''
   };
+  _scrollView: null;
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} ref={ref => this._scrollView = ref}>
         <View style={styles.row}>
           <Text style={styles.title}>Keyboard Demo</Text>
         </View>
@@ -52,14 +53,89 @@ export default class App extends Component {
           <Text>{this.state.value}</Text>
           <NumericKeyboard
             onChangeText={value => this.setState({ value })}
+            onClose={() => {
+              this._scrollView.scrollTo({ y: 0 })
+              console.log('[Keyboard]', 'onClose')
+            }}
+            onOpen={() => {
+              this._scrollView.scrollTo({ y: 200 })
+              console.log('[Keyboard]', 'onOpen')
+            }}
+          />
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.titleRow}>Custom Input</Text>
+          <NumericKeyboard
+            text={666}
+            maxLength={6}
+            renderInput={text => this._renderInput(text)}            
             onClose={() => console.log('[Keyboard]', 'onClose')}
             onOpen={() => console.log('[Keyboard]', 'onOpen')}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
+
+  _renderInput (text) {
+    const arr = [1,2,3,4,5,6];
+    const textArr = text.split('');
+
+    return (
+      <View style={customInputStyles.container}>
+        <View style={customInputStyles.codeRow}>
+          {arr.map((value, index) => {
+            let text = textArr[index];
+            return (
+              <View style={customInputStyles.textContainer} key={index}>
+                {text && <Text style={customInputStyles.text}>{text}</Text>}
+              </View>
+            )
+          })}
+        </View>
+        <View style={customInputStyles.indicatorRow}>
+          {arr.map((value, index) => <View style={customInputStyles.indicator} key={index} />)}
+        </View>
+      </View>
+    )
+  }
+  }
+
+const customInputStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    height: 60
+  },
+
+  codeRow: {
+    flexDirection: 'row',
+    flex: 1
+  },
+
+  indicatorRow: {
+    flexDirection: 'row',
+  },
+  indicator: {
+    flex: 1,
+    height: 2,
+    backgroundColor: '#d8d8d8',
+    marginLeft: 4,
+    marginRight: 4
+  },
+
+  textContainer: {
+    flex: 1,
+    marginLeft: 8,
+    marginRight: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 24,
+    color: '#333'
 }
+})
 
 const styles = StyleSheet.create({
   container: {
